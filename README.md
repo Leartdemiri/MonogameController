@@ -31,3 +31,25 @@ Tous les boutons, sticks analogiques et triggers sont représentés graphiquemen
 1. Cloner le dépôt :
    ```bash
    git clone https://github.com/votre-utilisateur/MonogameController.git
+
+
+## 🧪 Tests unitaires
+
+Trois tests unitaires simples.
+
+### StickConfig_InsideDeadZone_ReturnsZero
+Ce test vérifie que lorsque la valeur d’un stick est plus petite que la deadzone définie, la méthode `Apply()` retourne bien 0.  
+Comme ca on est sûr que la zone morte est correctement appliquée.
+
+### Profile_Constructor_CreatesEmptyList
+Ce test vérifie que lorsqu’on crée un nouvel objet `Profile`, la liste des sticks est bien initialisée et vide.  
+Cela évite les erreurs dans la gestion du profil et garantit que l’objet commence dans un état propre.
+
+### InputEvent_Constructor_StoresDateAndText
+Ce test vérifie que la classe `InputEvent` enregistre correctement la date et le texte qui lui sont transmis.  
+Cela garantit que l’affichage de l’historique contient les bonnes info.
+
+---
+
+
+
