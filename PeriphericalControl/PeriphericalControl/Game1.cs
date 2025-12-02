@@ -8,11 +8,13 @@ namespace PeriphericalControl
 {
     public class Game1 : Game
     {
+        // Graphique
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont _font;
         private Texture2D _pixelTex;
 
+        // Etats
         private GamePadState _prevGamePadState;
         private KeyboardState _prevKeyboardState;
         private MouseState _prevMouseState;
@@ -56,13 +58,13 @@ namespace PeriphericalControl
 
         protected override void Update(GameTime gameTime)
         {
-            var keyboard = Keyboard.GetState();
-            var mouse = Mouse.GetState();
+            KeyboardState keyboard = Keyboard.GetState();
+            MouseState mouse = Mouse.GetState();
 
             if (keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
-            var state = GamePad.GetState(PlayerIndex.One);
+            GamePadState state = GamePad.GetState(PlayerIndex.One);
 
             if (state.IsConnected)
             {
@@ -78,27 +80,16 @@ namespace PeriphericalControl
             base.Update(gameTime);
         }
 
-        #region Layout Panels
-
-        private void GetPanels(out Rectangle buttonsPanel, out Rectangle sticksPanel,
-                               out Rectangle calibPanel, out Rectangle historyPanel)
+        private void GetPanels(out Rectangle buttonsPanel, out Rectangle sticksPanel, out Rectangle calibPanel, out Rectangle historyPanel)
         {
-            // Boutons
             buttonsPanel = new Rectangle(20, 60, 420, 280);
 
-            // Sticks / triggers
             sticksPanel = new Rectangle(20, 360, 420, 280);
 
-            // Calibration plus large
             calibPanel = new Rectangle(460, 60, 460, 580);
 
-            // Historique un peu plus compact
             historyPanel = new Rectangle(940, 60, 320, 580);
         }
-
-        #endregion
-
-        #region Input, Calibration, History
 
         private bool IsKeyJustPressed(KeyboardState current, Keys key)
         {
@@ -107,39 +98,41 @@ namespace PeriphericalControl
 
         private void HandleCalibrationKeyboardInput(KeyboardState keyboard)
         {
-            if (_sticks.Count == 0) return;
+            // ya pas de sticks
+            if (_sticks.Count == 0)
+                return;
 
-            // Selection du stick (0 = gauche, 1 = droit)
+            // Changer le stick avant/arriere
             if (IsKeyJustPressed(keyboard, Keys.Up))
-                _selectedStickIndex = (_selectedStickIndex - 1 + _sticks.Count) % _sticks.Count;
+            {
+                _selectedStickIndex--;
+                if (_selectedStickIndex < 0)
+                    _selectedStickIndex = _sticks.Count - 1;
+            }
 
             if (IsKeyJustPressed(keyboard, Keys.Down))
-                _selectedStickIndex = (_selectedStickIndex + 1) % _sticks.Count;
+            {
+                _selectedStickIndex++;
+                if (_selectedStickIndex >= _sticks.Count)
+                    _selectedStickIndex = 0;
+            }
 
-            var stick = _sticks[_selectedStickIndex];
-
-            // Inversion (les deux axes du stick)
-            if (IsKeyJustPressed(keyboard, Keys.I))
-                stick.Inverted = !stick.Inverted;
-
-            // Effacer l'historique
+            // Effacer historique
             if (IsKeyJustPressed(keyboard, Keys.H))
                 _history.Clear();
         }
 
-        // Pour les sliders (par stick)
-        private class StickSliderRects
-        {
-            public int StickIndex;
-            public Rectangle DeadzoneRect;
-            public Rectangle SensRect;
-        }
-
         private List<StickSliderRects> GetStickSliderRects()
         {
-            GetPanels(out _, out _, out Rectangle calibPanel, out _);
+            Rectangle dummy1;
+            Rectangle dummy2;
+            Rectangle calibPanel;
+            Rectangle dummy4;
 
-            var list = new List<StickSliderRects>();
+            GetPanels(out dummy1, out dummy2, out calibPanel, out dummy4);
+
+            List<StickSliderRects> list = new List<StickSliderRects>();
+
             float lineHeight = 140f;
             int startY = calibPanel.Top + 70;
             int sliderHeight = 12;
@@ -151,15 +144,26 @@ namespace PeriphericalControl
                 int leftX = calibPanel.Left + 30;
                 int halfWidth = totalSliderWidth / 2;
 
-                Rectangle dz = new Rectangle(leftX, rowY + 30, halfWidth - 10, sliderHeight);
-                Rectangle sens = new Rectangle(leftX + halfWidth + 10, rowY + 30, halfWidth - 10, sliderHeight);
+                Rectangle deadzoneRect = new Rectangle(
+                    leftX,
+                    rowY + 30,
+                    halfWidth - 10,
+                    sliderHeight
+                );
 
-                list.Add(new StickSliderRects
-                {
-                    StickIndex = i,
-                    DeadzoneRect = dz,
-                    SensRect = sens
-                });
+                Rectangle sensRect = new Rectangle(
+                    leftX + halfWidth + 10,
+                    rowY + 30,
+                    halfWidth - 10,
+                    sliderHeight
+                );
+
+                StickSliderRects rects = new StickSliderRects();
+                rects.StickIndex = i;
+                rects.DeadzoneRect = deadzoneRect;
+                rects.SensRect = sensRect;
+
+                list.Add(rects);
             }
 
             return list;
@@ -167,12 +171,10 @@ namespace PeriphericalControl
 
         private void HandleSlidersMouseInput(MouseState mouse)
         {
-            var sliderRects = GetStickSliderRects();
+            List<StickSliderRects> sliderRects = GetStickSliderRects();
 
-            bool leftJustPressed = mouse.LeftButton == ButtonState.Pressed &&
-                                   _prevMouseState.LeftButton == ButtonState.Released;
-            bool leftReleased = mouse.LeftButton == ButtonState.Released &&
-                                _prevMouseState.LeftButton == ButtonState.Pressed;
+            bool leftJustPressed = mouse.LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released;
+            bool leftReleased = mouse.LeftButton == ButtonState.Released && _prevMouseState.LeftButton == ButtonState.Pressed;
 
             Point mousePoint = new Point(mouse.X, mouse.Y);
 
@@ -297,8 +299,7 @@ namespace PeriphericalControl
 
         private void LogAxisChange(string name, float previous, float current, GameTime gameTime)
         {
-            const float threshold = 0.15f;
-            if (Math.Abs(current - previous) >= threshold)
+            if (Math.Abs(current - previous) >= 0.15f)
             {
                 AddHistoryEvent($"{name} : {current:0.00}", gameTime.TotalGameTime);
             }
@@ -311,16 +312,11 @@ namespace PeriphericalControl
                 _history.RemoveAt(_history.Count - 1);
         }
 
-        #endregion
-
-        #region Primitives drawing
-
         private void DrawLine(Vector2 start, Vector2 end, Color color, int thickness = 2)
         {
             Vector2 edge = end - start;
             float angle = (float)Math.Atan2(edge.Y, edge.X);
-            _spriteBatch.Draw(_pixelTex, start, null, color,
-                angle, Vector2.Zero, new Vector2(edge.Length(), thickness), SpriteEffects.None, 0);
+            _spriteBatch.Draw(_pixelTex, start, null, color, angle, Vector2.Zero, new Vector2(edge.Length(), thickness), SpriteEffects.None, 0);
         }
 
         private void DrawCircle(Vector2 position, float radius, Color color, int thickness = 2)
@@ -356,8 +352,6 @@ namespace PeriphericalControl
                 _spriteBatch.DrawString(_font, title, new Vector2(rect.Left + 8, rect.Top + 4), Color.LightSkyBlue);
         }
 
-        #endregion
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(new Color(10, 10, 20));
@@ -373,8 +367,7 @@ namespace PeriphericalControl
                 return;
             }
 
-            GetPanels(out Rectangle buttonsPanel, out Rectangle sticksPanel,
-                      out Rectangle calibPanel, out Rectangle historyPanel);
+            GetPanels(out Rectangle buttonsPanel, out Rectangle sticksPanel, out Rectangle calibPanel, out Rectangle historyPanel);
 
             DrawPanel(buttonsPanel, "Buttons");
             DrawPanel(sticksPanel, "Sticks / Triggers");
@@ -499,10 +492,7 @@ namespace PeriphericalControl
             float lineHeight = 140f;
             Vector2 pos = new Vector2(panel.Left + 20, panel.Top + 40);
 
-            _spriteBatch.DrawString(_font,
-                "I: invert  H: clear history  Up/Down: select stick",
-                new Vector2(panel.Left + 12, panel.Bottom - 28),
-                Color.LightGray);
+            _spriteBatch.DrawString(_font,"H: clear history  Up/Down: select stick",new Vector2(panel.Left + 12, panel.Bottom - 28),Color.LightGray);
 
             var sliderRects = GetStickSliderRects();
 

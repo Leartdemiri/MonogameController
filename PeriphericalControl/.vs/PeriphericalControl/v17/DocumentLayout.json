@@ -1,17 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MercrediAprem\\Corrections\\PeriphericalControl\\",
+  "WorkspaceRootPath": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\leart.dmr2\\documents\\cfpt\\2025-2026\\atprog\\mercrediaprem\\corrections\\periphericalcontrol\\periphericalcontrol\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\leart.dmr2\\documents\\cfpt\\2025-2026\\atprog\\mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\leart.dmr2\\documents\\cfpt\\2025-2026\\atprog\\mercrediaprem\\corrections\\periphericalcontrol\\periphericalcontrol\\stickconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\leart.dmr2\\documents\\cfpt\\2025-2026\\atprog\\mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\stickconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\stickconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\leart.dmr2\\documents\\cfpt\\2025-2026\\atprog\\mercrediaprem\\corrections\\periphericalcontrol\\periphericalcontrol\\inputevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\leart.dmr2\\documents\\cfpt\\2025-2026\\atprog\\mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\sticksliderrects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\sticksliderrects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\leart.dmr2\\documents\\cfpt\\2025-2026\\atprog\\mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\inputevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\inputevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -22,17 +26,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "StickSliderRects.cs",
+              "DocumentMoniker": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\StickSliderRects.cs",
+              "RelativeDocumentMoniker": "PeriphericalControl\\StickSliderRects.cs",
+              "ToolTip": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\StickSliderRects.cs",
+              "RelativeToolTip": "PeriphericalControl\\StickSliderRects.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T08:18:16.782Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "InputEvent.cs",
-              "DocumentMoniker": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MercrediAprem\\Corrections\\PeriphericalControl\\PeriphericalControl\\InputEvent.cs",
+              "DocumentMoniker": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\InputEvent.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\InputEvent.cs",
-              "ToolTip": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MercrediAprem\\Corrections\\PeriphericalControl\\PeriphericalControl\\InputEvent.cs",
+              "ToolTip": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\InputEvent.cs",
               "RelativeToolTip": "PeriphericalControl\\InputEvent.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T12:06:03.598Z",
               "EditorCaption": ""
@@ -41,11 +58,11 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "StickConfig.cs",
-              "DocumentMoniker": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MercrediAprem\\Corrections\\PeriphericalControl\\PeriphericalControl\\StickConfig.cs",
+              "DocumentMoniker": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\StickConfig.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\StickConfig.cs",
-              "ToolTip": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MercrediAprem\\Corrections\\PeriphericalControl\\PeriphericalControl\\StickConfig.cs",
+              "ToolTip": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\StickConfig.cs",
               "RelativeToolTip": "PeriphericalControl\\StickConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T12:05:34.793Z",
               "EditorCaption": ""
@@ -54,11 +71,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Game1.cs",
-              "DocumentMoniker": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MercrediAprem\\Corrections\\PeriphericalControl\\PeriphericalControl\\Game1.cs",
+              "DocumentMoniker": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Game1.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\Game1.cs",
-              "ToolTip": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MercrediAprem\\Corrections\\PeriphericalControl\\PeriphericalControl\\Game1.cs",
+              "ToolTip": "C:\\Users\\leart.dmr2\\Documents\\CFPT\\2025-2026\\ATPROG\\MardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Game1.cs",
               "RelativeToolTip": "PeriphericalControl\\Game1.cs",
-              "ViewState": "AgIAAHsBAAAAAAAAAAAIwI8BAABJAAAAAAAAAA==",
+              "ViewState": "AgIAAM0BAAAAAAAAAAAowOQBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T11:49:13.997Z",
               "EditorCaption": ""
