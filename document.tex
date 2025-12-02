@@ -1,0 +1,162 @@
+\documentclass[11pt,a4paper]{article}
+
+%-------------------------------------------------------------------------------------
+% Informations générales du document
+%-------------------------------------------------------------------------------------
+
+\def\myauthor{Leart Demiri}
+\def\myemail{leart.dmr2@eduge.ch}
+\def\mytitle{Documentation du code source}
+\def\mysubtitle{PDF C\# MonogameController}
+
+\date{\today}
+
+%-------------------------------------------------------------------------------------
+% Packages essentiels
+%-------------------------------------------------------------------------------------
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[fr-FR]{datetime2}
+\usepackage{lmodern}
+\usepackage[urlcolor=blue,linkcolor=blue,colorlinks=true]{hyperref}
+\usepackage{listings}
+\usepackage{color,xcolor}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{fancyvrb}
+\usepackage{varioref}
+
+%-------------------------------------------------------------------------------------
+% Police Helvetica
+%-------------------------------------------------------------------------------------
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+%-------------------------------------------------------------------------------------
+% Listings C#
+%-------------------------------------------------------------------------------------
+
+\input{inc_listings_csharp}
+
+%-------------------------------------------------------------------------------------
+% Mise en page
+%-------------------------------------------------------------------------------------
+
+\usepackage[left=2.00cm, right=2.00cm, top=2.00cm, bottom=2.00cm]{geometry}
+
+\DeclareGraphicsExtensions{.png, .PNG, .jpg, .JPG}
+\graphicspath{{./images/}}
+
+%-------------------------------------------------------------------------------------
+% En-têtes et pieds de page
+%-------------------------------------------------------------------------------------
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\mytitle}
+\fancyhead[R]{\leftmark}
+
+\fancyfoot[L]{\textit{\myauthor}}
+\fancyfoot[C]{\tiny{-~\DTMnow~-}}
+\fancyfoot[R]{\thepage~/~\pageref{LastPage}}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+%-------------------------------------------------------------------------------------
+% Début du document
+%-------------------------------------------------------------------------------------
+
+\begin{document}
+	
+	\tableofcontents
+	\vspace{1cm}
+	
+	\lstlistoflistings
+	
+	\newpage
+	
+	%-------------------------------------------------------------------------------------
+	% Section : Structure du projet
+	%-------------------------------------------------------------------------------------
+	
+	\section{Structure du projet PeriphericalControl}
+	
+	Le projet \textbf{PeriphericalControl} s’organise autour d’une structure simple, pensée pour séparer clairement la logique d’entrée, l’affichage et les classes de configuration.  
+	L’arborescence regroupe notamment les fichiers principaux C\#, les classes de gestion d’événements et les objets utilitaires utilisés par l’application.  
+	Cette organisation facilite la lecture, la maintenance et l’extension du projet.
+	
+	%-------------------------------------------------------------------------------------
+	% Section : Code source
+	%-------------------------------------------------------------------------------------
+	
+	\section{Code source}
+	
+	Cette section rassemble les fichiers constituant le cœur fonctionnel du projet.  
+	Ils définissent l’initialisation, la boucle principale de rendu, la gestion des périphériques et les structures de données utilisées pour représenter les entrées d’une manette.
+	
+	%-------------------------------------------------------------------------------------
+	% Program.cs et Game1.cs
+	%-------------------------------------------------------------------------------------
+	
+	\subsection{Program.cs}
+	
+	Ce fichier contient le point d’entrée de l’application.  
+	
+	\lstinputlisting[caption=Program.cs]{PeriphericalControl/PeriphericalControl/Program.cs}
+	
+	\subsection{Game1.cs}
+	
+	Le fichier central de l’application.  
+	
+	\lstinputlisting[caption=Game1.cs]{PeriphericalControl/PeriphericalControl/Game1.cs}
+	
+	%-------------------------------------------------------------------------------------
+	% Section : Classes
+	%-------------------------------------------------------------------------------------
+	
+	\subsection{Classes}
+	
+	Les classes suivantes encapsulent les structures logiques nécessaires au fonctionnement du projet.  
+	Elles permettent de gérer les événements, de décrire les configurations et de manipuler les zones graphiques associées aux sticks.
+	
+	%---------------------------------------
+	\subsubsection{InputEvent}
+	
+	Cette classe représente un événement d’entrée détecté par l’application.  
+	Elle contient les informations nécessaires pour identifier l’action effectuée et son état.
+	
+	\lstinputlisting[caption=InputEvent.cs]{PeriphericalControl/PeriphericalControl/InputEvent.cs}
+	
+	%---------------------------------------
+	\subsubsection{StickConfig}
+	
+	Cette classe stocke la configuration liée aux sticks analogiques.  
+	Elle regroupe les valeurs de calibration ainsi que les paramètres utilisés pour déterminer l’affichage ou les limites du mouvement.
+	
+	\lstinputlisting[caption=StickConfig.cs]{PeriphericalControl/PeriphericalControl/StickConfig.cs}
+	
+	%---------------------------------------
+	\subsubsection{StickSliderRects}
+	
+	Cette classe définit les rectangles et zones graphiques utilisés pour représenter visuellement les positions et déplacements des sticks.  
+	Elle sert notamment au rendu des curseurs et des indicateurs analogiques.
+	
+	\lstinputlisting[caption=StickSliderRects.cs]{PeriphericalControl/PeriphericalControl/StickSliderRects.cs}
+	%---------------------------------------
+	\subsubsection{TestCase}
+	
+	Cette classe est la classe qui s'occupe de tout les test en utilisant MSTest.
+	
+	\lstinputlisting[caption=Tests.cs]{PeriphericalControl/PeriphericalControl/Tests.cs}
+	
+
+	
+\end{document}
