@@ -3,8 +3,31 @@
   "WorkspaceRootPath": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\sticksliderrects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\sticksliderrects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\periphericalcontrol.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\periphericalcontrol.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\inputevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\inputevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\periphericalcontrol.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\periphericalcontrol.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\stickconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,14 +40,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\inputevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\inputevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|solutionrelative:periphericalcontrol\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2039FD87-E35E-4C5C-9D29-A250C274C17F}|PeriphericalControl\\PeriphericalControl.csproj|c:\\users\\timoleon.hd\\documents\\2025-2026\\aprog poo-mardiaprem\\monogamecontroller\\periphericalcontrol\\periphericalcontrol\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
@@ -42,24 +57,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "Tests.cs",
+              "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Tests.cs",
+              "RelativeDocumentMoniker": "PeriphericalControl\\Tests.cs",
+              "ToolTip": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Tests.cs",
+              "RelativeToolTip": "PeriphericalControl\\Tests.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwAYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T14:31:30.084Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PeriphericalControl",
+              "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\PeriphericalControl.csproj",
+              "RelativeDocumentMoniker": "PeriphericalControl\\PeriphericalControl.csproj",
+              "ToolTip": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\PeriphericalControl.csproj",
+              "RelativeToolTip": "PeriphericalControl\\PeriphericalControl.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-02T14:28:15.019Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Microsoft.Common.CurrentVersion.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ViewState": "AgIAAEgHAAAAAAAAAAAgwGEHAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-12-02T14:27:25.134Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PeriphericalControl.csproj",
+              "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\PeriphericalControl.csproj",
+              "RelativeDocumentMoniker": "PeriphericalControl\\PeriphericalControl.csproj",
+              "ToolTip": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\PeriphericalControl.csproj",
+              "RelativeToolTip": "PeriphericalControl\\PeriphericalControl.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-02T14:09:33.843Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Profile.cs",
               "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Profile.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\Profile.cs",
               "ToolTip": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Profile.cs",
               "RelativeToolTip": "PeriphericalControl\\Profile.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T12:32:28.918Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T12:32:28.918Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Program.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\Program.cs",
@@ -67,12 +129,11 @@
               "RelativeToolTip": "PeriphericalControl\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T12:10:15.794Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T12:10:15.794Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "app.manifest",
               "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\app.manifest",
               "RelativeDocumentMoniker": "PeriphericalControl\\app.manifest",
@@ -80,12 +141,11 @@
               "RelativeToolTip": "PeriphericalControl\\app.manifest",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001203|",
-              "WhenOpened": "2025-12-02T12:10:23.366Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T12:10:23.366Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "Icon.ico - Icon [256x256, 32\u00A0bits, PNG]",
               "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Icon.ico",
               "RelativeDocumentMoniker": "PeriphericalControl\\Icon.ico",
@@ -97,55 +157,52 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "StickSliderRects.cs",
               "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\StickSliderRects.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\StickSliderRects.cs",
               "ToolTip": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\StickSliderRects.cs",
               "RelativeToolTip": "PeriphericalControl\\StickSliderRects.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T08:18:16.782Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "InputEvent.cs",
               "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\InputEvent.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\InputEvent.cs",
               "ToolTip": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\InputEvent.cs",
               "RelativeToolTip": "PeriphericalControl\\InputEvent.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T12:06:03.598Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T12:06:03.598Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "StickConfig.cs",
               "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\StickConfig.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\StickConfig.cs",
               "ToolTip": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\StickConfig.cs",
               "RelativeToolTip": "PeriphericalControl\\StickConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAA7wBYAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T12:05:34.793Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T12:05:34.793Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "Game1.cs",
               "DocumentMoniker": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Game1.cs",
               "RelativeDocumentMoniker": "PeriphericalControl\\Game1.cs",
               "ToolTip": "C:\\Users\\Timoleon.hd\\Documents\\2025-2026\\APROG POO-mardiAprem\\MonogameController\\PeriphericalControl\\PeriphericalControl\\Game1.cs",
               "RelativeToolTip": "PeriphericalControl\\Game1.cs",
-              "ViewState": "AgIAAAoDAAAAAAAAAAAuwBYDAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T11:49:13.997Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T11:49:13.997Z"
             }
           ]
         }
