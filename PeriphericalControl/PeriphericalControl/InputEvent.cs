@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PeriphericalControl
+public class InputEvent
 {
-    public class InputEvent
-    {
-        public TimeSpan Time { get; }
-        public string Text { get; }
+    public DateTime Date { get; set; }
+    public string Text { get; set; }
 
-        public InputEvent(TimeSpan time, string text)
-        {
-            Time = time;
-            Text = text;
-        }
+    public InputEvent(DateTime date, string text)
+    {
+        Date = date;
+        Text = text;
     }
 }

@@ -3,7 +3,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-
+using System.IO;
+using System.Text.Json;
+/*
+ * Nom : Demiri / Hede
+ * Prenom : Leart / Timoléon
+ * Date : 02/12/2025
+ * Description : Projet test controleur 
+ * Version : 1
+ */
 namespace PeriphericalControl
 {
     public class Game1 : Game
@@ -32,6 +40,21 @@ namespace PeriphericalControl
         private int _dragStickIndex = -1;
         private bool _dragDeadzone = false; // true = deadzone, false = sensitivity
 
+        // Profils
+        private const string ProfileFileName = "profile.json";
+
+        // Temps entre frames (coté jeu)
+        private double _lastFrameMs = 0.0;
+
+        // Mesure de "latence" d'appui pour le bouton A (duree entre PRESS et RELEASE)
+        private bool _isButtonALatencyRunning = false;
+        private TimeSpan _buttonAPressStart;
+        private double _buttonALastDurationMs = 0.0;
+
+        
+        /// <summary>
+        /// Constructeur du jeu, initialisation de la fenêtre et des configs de base
+        /// </summary>
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -42,11 +65,16 @@ namespace PeriphericalControl
             _graphics.PreferredBackBufferHeight = 720;
             _graphics.ApplyChanges();
 
-            // Deux sticks seulement : gauche / droite
+            // Deux sticks seulement : gauche et droite
             _sticks.Add(new StickConfig("Stick gauche"));
             _sticks.Add(new StickConfig("Stick droit"));
         }
 
+        
+        /// <summary>
+        /// chargement des ressources graphiques 
+        /// </summary>
+        
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -56,13 +84,24 @@ namespace PeriphericalControl
             _pixelTex.SetData(new[] { Color.White });
         }
 
+
+        /// <summary>
+        /// Boucle de mise à jour, lecture des entrées
+        /// </summary>
+        /// <param name="gameTime">Infos sur temps de jeu</param>
+
         protected override void Update(GameTime gameTime)
         {
+            // temps entre deux update coté jeu (en ms)
+            _lastFrameMs = gameTime.ElapsedGameTime.TotalMilliseconds;
+
             KeyboardState keyboard = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
 
             if (keyboard.IsKeyDown(Keys.Escape))
+            {
                 Exit();
+            }
 
             GamePadState state = GamePad.GetState(PlayerIndex.One);
 
@@ -71,6 +110,20 @@ namespace PeriphericalControl
                 HandleCalibrationKeyboardInput(keyboard);
                 HandleSlidersMouseInput(mouse);
                 UpdateHistory(state, gameTime);
+
+                // Vibration tant que A est maintenu
+                if (state.Buttons.A == ButtonState.Pressed)
+                {
+                    GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
+                }
+                else
+                {
+                    GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+                }
+            }
+            else
+            {
+                GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
             }
 
             _prevGamePadState = state;
@@ -80,48 +133,64 @@ namespace PeriphericalControl
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Fenetre en quatre panneaux
+        /// </summary>
         private void GetPanels(out Rectangle buttonsPanel, out Rectangle sticksPanel, out Rectangle calibPanel, out Rectangle historyPanel)
         {
             buttonsPanel = new Rectangle(20, 60, 420, 280);
 
-            sticksPanel = new Rectangle(20, 360, 420, 280);
+            sticksPanel = new Rectangle(20, 360, 420, 320);
 
             calibPanel = new Rectangle(460, 60, 460, 580);
 
             historyPanel = new Rectangle(940, 60, 320, 580);
         }
 
+        /// <summary>
+        /// Petit helper pour savoir si une touche vient juste d'etre pressée
+        /// </summary>
         private bool IsKeyJustPressed(KeyboardState current, Keys key)
         {
             return current.IsKeyDown(key) && !_prevKeyboardState.IsKeyDown(key);
         }
 
+        /// <summary>
+        /// Gestion des raccourcis clavier pour à la calibration et la latence 
+        /// </summary>
         private void HandleCalibrationKeyboardInput(KeyboardState keyboard)
         {
-            // ya pas de sticks
             if (_sticks.Count == 0)
+            {
                 return;
-
-            // Changer le stick avant/arriere
-            if (IsKeyJustPressed(keyboard, Keys.Up))
-            {
-                _selectedStickIndex--;
-                if (_selectedStickIndex < 0)
-                    _selectedStickIndex = _sticks.Count - 1;
             }
 
-            if (IsKeyJustPressed(keyboard, Keys.Down))
-            {
-                _selectedStickIndex++;
-                if (_selectedStickIndex >= _sticks.Count)
-                    _selectedStickIndex = 0;
-            }
-
-            // Effacer historique
+            // Effacer historique + reset de la durée d'appui de A
             if (IsKeyJustPressed(keyboard, Keys.H))
+            {
                 _history.Clear();
+                _buttonALastDurationMs = 0.0;
+                _isButtonALatencyRunning = false;
+            }
+
+            // Sauvegarder et charger profils
+            if (IsKeyJustPressed(keyboard, Keys.F5))
+            {
+                SaveProfile();
+            }
+
+            if (IsKeyJustPressed(keyboard, Keys.F9))
+            {
+                LoadProfile();
+            }
         }
 
+        
+        /// <summary>
+        /// Calcul des rectangles pour chaque stick
+        /// </summary>
+        /// <returns></returns>
+        
         private List<StickSliderRects> GetStickSliderRects()
         {
             Rectangle dummy1;
@@ -169,6 +238,12 @@ namespace PeriphericalControl
             return list;
         }
 
+        
+        /// <summary>
+        /// Gestion de la souris sur les sliders
+        /// </summary>
+        /// <param name="mouse"></param>
+        
         private void HandleSlidersMouseInput(MouseState mouse)
         {
             List<StickSliderRects> sliderRects = GetStickSliderRects();
@@ -180,7 +255,7 @@ namespace PeriphericalControl
 
             if (leftJustPressed)
             {
-                foreach (var s in sliderRects)
+                foreach (StickSliderRects s in sliderRects)
                 {
                     if (s.DeadzoneRect.Contains(mousePoint))
                     {
@@ -203,13 +278,17 @@ namespace PeriphericalControl
 
             if (_isDraggingSlider && mouse.LeftButton == ButtonState.Pressed)
             {
-                var s = sliderRects.Find(sl => sl.StickIndex == _dragStickIndex);
+                StickSliderRects s = sliderRects.Find(sl => sl.StickIndex == _dragStickIndex);
                 if (s != null)
                 {
                     if (_dragDeadzone)
+                    {
                         UpdateSliderValueFromMouse(mouse.X, s.DeadzoneRect);
+                    }
                     else
+                    {
                         UpdateSliderValueFromMouse(mouse.X, s.SensRect);
+                    }
                 }
             }
 
@@ -220,15 +299,20 @@ namespace PeriphericalControl
             }
         }
 
+        /// <summary>
+        /// Mise à jour de la valeur d'un slider (deadzone ou sensibilité) en fonction de la position X de la souris
+        /// </summary>
         private void UpdateSliderValueFromMouse(int mouseX, Rectangle rect)
         {
             if (_dragStickIndex < 0 || _dragStickIndex >= _sticks.Count)
+            {
                 return;
+            }
 
             float t = (mouseX - rect.Left) / (float)rect.Width;
             t = MathHelper.Clamp(t, 0f, 1f);
 
-            var stick = _sticks[_dragStickIndex];
+            StickConfig stick = _sticks[_dragStickIndex];
 
             if (_dragDeadzone)
             {
@@ -242,9 +326,13 @@ namespace PeriphericalControl
             }
         }
 
+        /// <summary>
+        /// Mise à jour de l'historique des evenements d'entrée 
+        /// On mesure la durée entre PRESS et RELEASE du bouton A
+        /// </summary>
         private void UpdateHistory(GamePadState state, GameTime gameTime)
         {
-            var buttons = new Dictionary<string, ButtonState>()
+            Dictionary<string, ButtonState> buttons = new Dictionary<string, ButtonState>()
             {
                 { "A",     state.Buttons.A },
                 { "B",     state.Buttons.B },
@@ -262,7 +350,7 @@ namespace PeriphericalControl
                 { "Right", state.DPad.Right }
             };
 
-            var prevButtons = new Dictionary<string, ButtonState>()
+            Dictionary<string, ButtonState> prevButtons = new Dictionary<string, ButtonState>()
             {
                 { "A",     _prevGamePadState.Buttons.A },
                 { "B",     _prevGamePadState.Buttons.B },
@@ -280,38 +368,86 @@ namespace PeriphericalControl
                 { "Right", _prevGamePadState.DPad.Right }
             };
 
-            foreach (var kvp in buttons)
+            foreach (KeyValuePair<string, ButtonState> kvp in buttons)
             {
-                if (kvp.Value != prevButtons[kvp.Key])
+                ButtonState currentState = kvp.Value;
+                ButtonState previousState = prevButtons[kvp.Key];
+
+                if (currentState != previousState)
                 {
-                    string stateText = kvp.Value == ButtonState.Pressed ? "PRESS" : "RELEASE";
-                    AddHistoryEvent($"{kvp.Key} : {stateText}", gameTime.TotalGameTime);
+                    // si c'est le bouton A, on calcule la durée entre PRESS et RELEASE
+                    HandleButtonALatency(kvp.Key, currentState, previousState, gameTime.TotalGameTime);
+
+                    string stateText = currentState == ButtonState.Pressed ? "PRESS" : "RELEASE";
+                    AddHistoryEvent(string.Format("{0} : {1}", kvp.Key, stateText));
                 }
             }
 
-            LogAxisChange("Left Stick X", _prevGamePadState.ThumbSticks.Left.X, state.ThumbSticks.Left.X, gameTime);
-            LogAxisChange("Left Stick Y", _prevGamePadState.ThumbSticks.Left.Y, state.ThumbSticks.Left.Y, gameTime);
-            LogAxisChange("Right Stick X", _prevGamePadState.ThumbSticks.Right.X, state.ThumbSticks.Right.X, gameTime);
-            LogAxisChange("Right Stick Y", _prevGamePadState.ThumbSticks.Right.Y, state.ThumbSticks.Right.Y, gameTime);
-            LogAxisChange("LT", _prevGamePadState.Triggers.Left, state.Triggers.Left, gameTime);
-            LogAxisChange("RT", _prevGamePadState.Triggers.Right, state.Triggers.Right, gameTime);
+            LogAxisChange("Left Stick X", _prevGamePadState.ThumbSticks.Left.X, state.ThumbSticks.Left.X);
+            LogAxisChange("Left Stick Y", _prevGamePadState.ThumbSticks.Left.Y, state.ThumbSticks.Left.Y);
+            LogAxisChange("Right Stick X", _prevGamePadState.ThumbSticks.Right.X, state.ThumbSticks.Right.X);
+            LogAxisChange("Right Stick Y", _prevGamePadState.ThumbSticks.Right.Y, state.ThumbSticks.Right.Y);
+            LogAxisChange("LT", _prevGamePadState.Triggers.Left, state.Triggers.Left);
+            LogAxisChange("RT", _prevGamePadState.Triggers.Right, state.Triggers.Right);
         }
 
-        private void LogAxisChange(string name, float previous, float current, GameTime gameTime)
+        /// <summary>
+        /// Gestion de la durée d'appui pour le bouton A 
+        /// </summary>
+        private void HandleButtonALatency(string buttonName, ButtonState current, ButtonState previous, TimeSpan time)
         {
-            if (Math.Abs(current - previous) >= 0.15f)
+            if (buttonName != "A")
             {
-                AddHistoryEvent($"{name} : {current:0.00}", gameTime.TotalGameTime);
+                return;
+            }
+
+            // début de l'appui : A passe de RELEASE -> PRESS
+            if (previous == ButtonState.Released && current == ButtonState.Pressed)
+            {
+                _isButtonALatencyRunning = true;
+                _buttonAPressStart = time;
+            }
+            // fin de l'appui : A passe de PRESS -> RELEASE
+            else if (previous == ButtonState.Pressed && current == ButtonState.Released && _isButtonALatencyRunning)
+            {
+                TimeSpan delta = time - _buttonAPressStart;
+                double ms = delta.TotalMilliseconds;
+                if (ms < 0.0)
+                {
+                    ms = 0.0;
+                }
+                _buttonALastDurationMs = ms;
+                _isButtonALatencyRunning = false;
             }
         }
 
-        private void AddHistoryEvent(string text, TimeSpan time)
+        /// <summary>
+        /// Détection d'un changement assez gros sur un axe pour l'ajouter dans l'historique
+        /// </summary>
+        private void LogAxisChange(string name, float previous, float current)
         {
-            _history.Insert(0, new InputEvent(time, text));
-            if (_history.Count > MaxHistoryEntries)
-                _history.RemoveAt(_history.Count - 1);
+            if (Math.Abs(current - previous) >= 0.15f)
+            {
+                AddHistoryEvent(string.Format("{0} : {1:0.00}", name, current));
+            }
         }
 
+        /// <summary>
+        /// Ajout d'un événement au début de la liste d'historique (en gardant une taille max),
+        /// en utilisant l'heure du PC
+        /// </summary>
+        private void AddHistoryEvent(string text)
+        {
+            _history.Insert(0, new InputEvent(DateTime.Now, text));
+            if (_history.Count > MaxHistoryEntries)
+            {
+                _history.RemoveAt(_history.Count - 1);
+            }
+        }
+
+        /// <summary>
+        /// Dessin d'une ligne avec la texture 1x1 pixel étiré
+        /// </summary>
         private void DrawLine(Vector2 start, Vector2 end, Color color, int thickness = 2)
         {
             Vector2 edge = end - start;
@@ -319,6 +455,9 @@ namespace PeriphericalControl
             _spriteBatch.Draw(_pixelTex, start, null, color, angle, Vector2.Zero, new Vector2(edge.Length(), thickness), SpriteEffects.None, 0);
         }
 
+        /// <summary>
+        /// Dessin d'un cercle 
+        /// </summary>
         private void DrawCircle(Vector2 position, float radius, Color color, int thickness = 2)
         {
             int segments = 40;
@@ -334,11 +473,17 @@ namespace PeriphericalControl
             }
         }
 
+        /// <summary>
+        /// Dessin d'un rectangle 
+        /// </summary>
         private void DrawFilledRect(Rectangle rect, Color color)
         {
             _spriteBatch.Draw(_pixelTex, rect, color);
         }
 
+        /// <summary>
+        /// Dessin d'un panneau 
+        /// </summary>
         private void DrawPanel(Rectangle rect, string title)
         {
             DrawFilledRect(rect, new Color(20, 20, 20, 220));
@@ -346,18 +491,23 @@ namespace PeriphericalControl
             DrawLine(new Vector2(rect.Left, rect.Top), new Vector2(rect.Right, rect.Top), Color.Gray);
             DrawLine(new Vector2(rect.Right, rect.Top), new Vector2(rect.Right, rect.Bottom), Color.Gray);
             DrawLine(new Vector2(rect.Right, rect.Bottom), new Vector2(rect.Left, rect.Bottom), Color.Gray);
-            DrawLine(new Vector2(rect.Left, rect.Bottom), new Vector2(rect.Left, rect.Top), Color.Gray);
+            DrawLine(new Vector2(rect.Left, rect.Bottom), new Vector2( rect.Left, rect.Top), Color.Gray);
 
             if (!string.IsNullOrEmpty(title))
+            {
                 _spriteBatch.DrawString(_font, title, new Vector2(rect.Left + 8, rect.Top + 4), Color.LightSkyBlue);
+            }
         }
 
+        /// <summary>
+        /// Affichage des panneaux et infos de la manette.
+        /// </summary>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(new Color(10, 10, 20));
             _spriteBatch.Begin();
 
-            var state = GamePad.GetState(PlayerIndex.One);
+            GamePadState state = GamePad.GetState(PlayerIndex.One);
 
             if (!state.IsConnected)
             {
@@ -367,7 +517,11 @@ namespace PeriphericalControl
                 return;
             }
 
-            GetPanels(out Rectangle buttonsPanel, out Rectangle sticksPanel, out Rectangle calibPanel, out Rectangle historyPanel);
+            Rectangle buttonsPanel;
+            Rectangle sticksPanel;
+            Rectangle calibPanel;
+            Rectangle historyPanel;
+            GetPanels(out buttonsPanel, out sticksPanel, out calibPanel, out historyPanel);
 
             DrawPanel(buttonsPanel, "Buttons");
             DrawPanel(sticksPanel, "Sticks / Triggers");
@@ -385,17 +539,20 @@ namespace PeriphericalControl
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Affichage de l'état de tous les boutons
+        /// </summary>
         private void DrawButtonsState(GamePadState state, Rectangle panel)
         {
             int columns = 3;
-            float marginX = 50f;
-            float marginY = 40f;
+            float marginX = 52f;
+            float marginY = 42f;
             float spacingX = (panel.Width - 2 * marginX) / (columns - 1);
             float spacingY = 50f;
 
             Vector2 startPos = new Vector2(panel.Left + marginX, panel.Top + marginY);
 
-            var buttons = new Dictionary<string, ButtonState>()
+            Dictionary<string, ButtonState> buttons = new Dictionary<string, ButtonState>()
             {
                 { "A",     state.Buttons.A },
                 { "B",     state.Buttons.B },
@@ -414,7 +571,7 @@ namespace PeriphericalControl
             };
 
             int i = 0;
-            foreach (var b in buttons)
+            foreach (KeyValuePair<string, ButtonState> b in buttons)
             {
                 int col = i % columns;
                 int row = i / columns;
@@ -422,8 +579,8 @@ namespace PeriphericalControl
                 Vector2 pos = startPos + new Vector2(col * spacingX, row * spacingY);
                 Color color = b.Value == ButtonState.Pressed ? Color.OrangeRed : Color.DimGray;
 
-                float radius = 18f;
-                DrawCircle(pos, radius, color, 3);
+                float radius = 20f;
+                DrawCircle(pos, radius, color, 2);
 
                 Vector2 textSize = _font.MeasureString(b.Key);
                 Vector2 textPos = pos - textSize / 2f;
@@ -433,6 +590,9 @@ namespace PeriphericalControl
             }
         }
 
+        /// <summary>
+        /// Affichage des sticks et des triggers 
+        /// </summary>
         private void DrawSticksAndTriggers(GamePadState state, Rectangle panel)
         {
             Vector2 leftStickCenter = new Vector2(panel.Left + 110, panel.Top + 120);
@@ -443,8 +603,8 @@ namespace PeriphericalControl
             float rawRX = state.ThumbSticks.Right.X;
             float rawRY = state.ThumbSticks.Right.Y;
 
-            var cfgLeft = _sticks[0];
-            var cfgRight = _sticks[1];
+            StickConfig cfgLeft = _sticks[0];
+            StickConfig cfgRight = _sticks[1];
 
             float adjLX = cfgLeft.Apply(rawLX);
             float adjLY = cfgLeft.Apply(rawLY);
@@ -455,17 +615,21 @@ namespace PeriphericalControl
             DrawCircle(leftStickCenter, 40, Color.White, 2);
             Vector2 leftStickPos = leftStickCenter + new Vector2(adjLX * 30, -adjLY * 30);
             DrawFilledRect(new Rectangle((int)leftStickPos.X - 5, (int)leftStickPos.Y - 5, 10, 10), Color.LimeGreen);
-            _spriteBatch.DrawString(_font,
-                $"L: ({adjLX:0.00}; {adjLY:0.00})",
-                new Vector2(panel.Left + 20, panel.Top + 200), Color.LightGray);
+            _spriteBatch.DrawString(
+                _font,
+                string.Format("L: ({0:0.00}; {1:0.00})", adjLX, adjLY),
+                new Vector2(panel.Left + 20, panel.Top + 200),
+                Color.LightGray);
 
             // Stick droit
             DrawCircle(rightStickCenter, 40, Color.White, 2);
             Vector2 rightStickPos = rightStickCenter + new Vector2(adjRX * 30, -adjRY * 30);
             DrawFilledRect(new Rectangle((int)rightStickPos.X - 5, (int)rightStickPos.Y - 5, 10, 10), Color.LimeGreen);
-            _spriteBatch.DrawString(_font,
-                $"R: ({adjRX:0.00}; {adjRY:0.00})",
-                new Vector2(panel.Left + 220, panel.Top + 200), Color.LightGray);
+            _spriteBatch.DrawString(
+                _font,
+                string.Format("R: ({0:0.00}; {1:0.00})", adjRX, adjRY),
+                new Vector2(panel.Left + 220, panel.Top + 200),
+                Color.LightGray);
 
             // Triggers
             float lt = state.Triggers.Left;
@@ -483,26 +647,35 @@ namespace PeriphericalControl
             DrawFilledRect(new Rectangle(barX, barY1, (int)(barWidth * lt), barHeight), Color.Yellow);
             DrawFilledRect(new Rectangle(barX, barY2, (int)(barWidth * rt), barHeight), Color.Yellow);
 
-            _spriteBatch.DrawString(_font, $"LT : {lt:0.00}", new Vector2(barX, barY1 - 24), Color.White);
-            _spriteBatch.DrawString(_font, $"RT : {rt:0.00}", new Vector2(barX, barY2 - 24), Color.White);
+            _spriteBatch.DrawString(_font, string.Format("LT : {0:0.00}", lt), new Vector2(barX, barY1 - 24), Color.White);
+            _spriteBatch.DrawString(_font, string.Format("RT : {0:0.00}", rt), new Vector2(barX, barY2 - 24), Color.White);
         }
 
+       
+        /// <summary>
+        /// Affichage du panneau de calibration
+        /// </summary>
+        
         private void DrawCalibrationPanel(GamePadState state, Rectangle panel)
         {
             float lineHeight = 140f;
             Vector2 pos = new Vector2(panel.Left + 20, panel.Top + 40);
 
-            _spriteBatch.DrawString(_font,"H: clear history  Up/Down: select stick",new Vector2(panel.Left + 12, panel.Bottom - 28),Color.LightGray);
+            _spriteBatch.DrawString(
+                _font,
+                "H: clear history  F5: save  F9: load",
+                new Vector2(panel.Left + 12, panel.Bottom - 28),
+                Color.LightGray);
 
-            var sliderRects = GetStickSliderRects();
+            List<StickSliderRects> sliderRects = GetStickSliderRects();
 
             for (int i = 0; i < _sticks.Count; i++)
             {
-                bool selected = (i == _selectedStickIndex);
-                var stick = _sticks[i];
-                var rects = sliderRects[i];
+                StickConfig stick = _sticks[i];
+                StickSliderRects rects = sliderRects[i];
 
-                float rawX, rawY;
+                float rawX;
+                float rawY;
                 if (i == 0)
                 {
                     rawX = state.ThumbSticks.Left.X;
@@ -517,18 +690,18 @@ namespace PeriphericalControl
                 float adjX = stick.Apply(rawX);
                 float adjY = stick.Apply(rawY);
 
-                string label = $"{stick.Name}  DZ={stick.DeadZone:0.00}  S={stick.Sensitivity:0.00}  Inv={(stick.Inverted ? "Y" : "N")}";
-                string line2 = $"Raw=({rawX:0.00},{rawY:0.00})  Adj=({adjX:0.00},{adjY:0.00})";
+                string label = string.Format(
+                    "{0}  DZ={1:0.00}  S={2:0.00}  Inv={3}",
+                    stick.Name,
+                    stick.DeadZone,
+                    stick.Sensitivity,
+                    stick.Inverted ? "Y" : "N");
 
-                Color color = selected ? Color.LightGreen : Color.White;
+                string line2 = string.Format(
+                    "Raw=({0:0.00},{1:0.00})  Adj=({2:0.00},{3:0.00})",
+                    rawX, rawY, adjX, adjY);
 
-                if (selected)
-                {
-                    DrawFilledRect(new Rectangle(panel.Left + 10, (int)(pos.Y - 4),
-                        panel.Width - 20, 50), new Color(60, 60, 60, 160));
-                }
-
-                _spriteBatch.DrawString(_font, label, pos, color);
+                _spriteBatch.DrawString(_font, label, pos, Color.White);
                 _spriteBatch.DrawString(_font, line2, pos + new Vector2(0, 20), Color.LightGray);
 
                 // Sliders
@@ -538,10 +711,15 @@ namespace PeriphericalControl
 
                 pos.Y += lineHeight;
                 if (pos.Y > panel.Bottom - 60)
+                {
                     break;
+                }
             }
         }
 
+        /// <summary>
+        /// Dessin d'un slider horizontal 
+        /// </summary>
         private void DrawSlider(Rectangle rect, float t, string label)
         {
             t = MathHelper.Clamp(t, 0f, 1f);
@@ -556,19 +734,86 @@ namespace PeriphericalControl
             _spriteBatch.DrawString(_font, label, new Vector2(rect.Left, rect.Top - 20), Color.LightGray);
         }
 
+        /// <summary>
+        /// Affichage de l'historique
+        /// </summary>
         private void DrawHistoryPanel(Rectangle panel)
         {
+            string header = string.Format(
+                "Frame ~ {0:0.0} ms   A press ~ {1:0} ms",
+                _lastFrameMs,
+                _buttonALastDurationMs);
+
+            _spriteBatch.DrawString(_font, header, new Vector2(panel.Left + 10, panel.Top + 16), Color.LightSkyBlue);
+
             Vector2 pos = new Vector2(panel.Left + 10, panel.Top + 40);
             float lineHeight = 24f;
 
-            foreach (var e in _history)
+            foreach (InputEvent e in _history)
             {
-                string line = $"[{e.Time.TotalSeconds,6:0.0}s] {e.Text}";
+                string line = string.Format(
+                    "[{0:HH:mm:ss}] {1}",
+                    e.Date,
+                    e.Text);
+
                 _spriteBatch.DrawString(_font, line, pos, Color.White);
                 pos.Y += lineHeight;
-                if (pos.Y > panel.Bottom - 20) break;
+                if (pos.Y > panel.Bottom - 20)
+                {
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sauvegarde des paramètres de tous les sticks dans un fichier JSON
+        /// </summary>
+        private void SaveProfile()
+        {
+            Profile profile = new Profile();
+
+            foreach (StickConfig stick in _sticks)
+            {
+                StickConfig copy = new StickConfig(stick.Name);
+                copy.DeadZone = stick.DeadZone;
+                copy.Sensitivity = stick.Sensitivity;
+                copy.Inverted = stick.Inverted;
+                profile.Sticks.Add(copy);
+            }
+
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.WriteIndented = true;
+
+            string json = JsonSerializer.Serialize(profile, options);
+            File.WriteAllText(ProfileFileName, json);
+        }
+
+        /// <summary>
+        /// Chargement des paramètres de sticks depuis le fichier JSON 
+        /// </summary>
+        private void LoadProfile()
+        {
+            if (!File.Exists(ProfileFileName))
+            {
+                return;
+            }
+
+            string json = File.ReadAllText(ProfileFileName);
+            Profile profile = JsonSerializer.Deserialize<Profile>(json);
+            if (profile == null || profile.Sticks == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < _sticks.Count && i < profile.Sticks.Count; i++)
+            {
+                StickConfig saved = profile.Sticks[i];
+                StickConfig target = _sticks[i];
+
+                target.DeadZone = saved.DeadZone;
+                target.Sensitivity = saved.Sensitivity;
+                target.Inverted = saved.Inverted;
             }
         }
     }
-
 }

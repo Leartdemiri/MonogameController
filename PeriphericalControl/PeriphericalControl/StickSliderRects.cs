@@ -1,16 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-
 
 namespace PeriphericalControl
 {
     public class StickSliderRects
     {
+
+        // Index du stick dans la liste 
+
         public int StickIndex;
+
+        
+        // Rectangle slider de deadzone
+
         public Rectangle DeadzoneRect;
+
+        
+        // Rectangle slider de sensibilité
+        
         public Rectangle SensRect;
     }
 }

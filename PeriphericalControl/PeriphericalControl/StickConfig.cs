@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PeriphericalControl
 {
@@ -26,13 +22,15 @@ namespace PeriphericalControl
 
             // Deadzone
             if (Math.Abs(value) < DeadZone)
+            {
                 return 0f;
+            }
 
             float sign = Math.Sign(value);
             float magnitude = (Math.Abs(value) - DeadZone) / (1f - DeadZone);
             value = sign * magnitude;
 
-            // Sensibilite
+            // Sensibilité
             value *= Sensitivity;
 
             // Clamp
@@ -40,7 +38,9 @@ namespace PeriphericalControl
 
             // Inversion
             if (Inverted)
+            {
                 value = -value;
+            }
 
             return value;
         }
